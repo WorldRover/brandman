@@ -9,7 +9,7 @@ class Page {
 
 	public function buildPage() {
 		//! GET BASE HTML
-		$baseFile = file_get_contents("assets/templates/base.html");
+		$baseFile = file_get_contents("assets/templates/base.phtml");
 		
 		//! SETUP HEADER LINKS
 		$header_links = "";
@@ -35,14 +35,19 @@ class Page {
 
 		$baseFile = str_replace("[[HTML_BODY_SCRIPTS]]",$scripts,$baseFile);
 
-		//! SETUP LANGUAGE FILE
+		//! SETUP LANGUAGE DEFINITIONS
 		$baseFile = str_replace("[[TEXT_TITLE]]",TEXT_BASE_TITLE,$baseFile);
 		
 		$baseFile = str_replace("[[TEXT_OPENNAV]]",TEXT_OPENNAV,$baseFile);
 		
 		$baseFile = str_replace("[[HTML_BODY_NAV_BRAND]]",HTML_BODY_NAV_BRAND,$baseFile);
-
 		
+		//! SETUP PAGE CONTENTS
+		$contentFile = file_get_contents("assets/templates/" . $this->pageID . ".phtml");
+		
+		$baseFile = str_replace("[[HTML_BODY_CONTENTS]]",$contentFile,$baseFile);
+		
+		//! RETURN PAGE
 		return $baseFile;
 	}
 }
