@@ -4,7 +4,11 @@ class Timeline {
 	private $companyID;
 	
 	public function __construct($companyID) {
-		$this->companyID = $companyID;
+		if($companyID) {
+			$this->companyID = $companyID;
+		} else {
+			$this->companyID = NULL;
+		}
 	}
 	
 	public function buildTimeline() {
