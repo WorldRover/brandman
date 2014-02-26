@@ -1,0 +1,3 @@
+<?php
+$contents = "VIEW:TEMPLATE";
+?>
