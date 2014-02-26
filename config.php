@@ -1,4 +1,6 @@
 <?php
-$db = mysql_connect("localhost","root","root");
-mysql_select_db("brandman");
+define("DB_HOST","localhost");
+define("DB_USER","root");
+define("DB_PASS","root");
+define("DB_DB","brandman");
 ?>
