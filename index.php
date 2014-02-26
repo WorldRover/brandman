@@ -10,6 +10,6 @@ function __autoload($class_name) {
 
 require_once("assets/languages/" . LANGUAGE . ".php");
 
-$page = new Page("timeline");
+$page = new Page("default","Timeline");
 echo $page->buildPage();
 ?>

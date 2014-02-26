@@ -2,9 +2,11 @@
 class Page {
 	
 	private $pageID;
+	private $viewID;
 
-	public function __construct($pageID) {
+	public function __construct($pageID,$viewID) {
 		$this->pageID = $pageID;
+		$this->viewID = $viewID;
 	}
 
 	public function buildPage() {
@@ -42,10 +44,12 @@ class Page {
 		
 		$baseFile = str_replace("[[HTML_BODY_NAV_BRAND]]",HTML_BODY_NAV_BRAND,$baseFile);
 		
-		//! SETUP PAGE CONTENTS
-		$contentFile = file_get_contents("assets/templates/" . $this->pageID . ".phtml");
+		//! SETUP VIEW
+		$view = new View($this->viewID);
+		$viewFile = $view->buildView();
 		
-		$baseFile = str_replace("[[HTML_BODY_CONTENTS]]",$contentFile,$baseFile);
+		
+		$baseFile = str_replace("[[HTML_BODY_CONTENTS]]",$viewFile,$baseFile);
 		
 		//! RETURN PAGE
 		return $baseFile;
