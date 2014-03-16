@@ -1,10 +1,14 @@
 <?php
-class View {
+class Event {
 	
 	protected $db;
-	private $viewID;
-	private $contentFile;
-	private $contents;
+	private $eventID;
+	private $date;
+	private $operationID;
+	private $operationName;
+	private $brands = Array();
+	private $companies = Array();
+	private $names = Array();
 	
 	public function __construct($db,$viewID) {
 		$this->db = $db;
@@ -17,4 +21,5 @@ class View {
 		return str_replace("[[CONTENTS]]",$this->contents,$this->contentFile);
 	}
 }
+
 ?>

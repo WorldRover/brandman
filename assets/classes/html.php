@@ -1,4 +1,36 @@
-<html>
+<?php
+class Event {
+	
+	protected $db;
+	private $eventID;
+	private $date;
+	private $operationID;
+	private $operationName;
+	private $brands = Array();
+	private $companies = Array();
+	private $names = Array();
+	
+	public function __construct($db,$eventID) {
+		$this->db = $db;
+		$this->eventID = $eventID;
+	
+		$query = $this->db->prepare('SELECT * FROM events e LEFT JOIN restructure_operations ro ON e.operationID = ro.operationID LEFT JOIN event_details ed ON e.eventID = ed.eventID LEFT JOIN brands b ON ed.brandID = b.brandID LEFT JOIN companies c ON ed.companyID = c.companyID LEFT JOIN names n ON ed.nameID = n.nameID;');
+	    $query->execute(array('id' => $this->companyID));
+	 
+	    while($row = $query->fetch()) {
+	        $contents .= "<div>";
+	    }
+		
+	}
+	
+	public function buildView() {
+		$this->contentFile = file_get_contents("assets/templates/" . $this->viewID . ".phtml");
+		require_once("assets/views/" . $this->viewID . ".php");
+		return str_replace("[[CONTENTS]]",$this->contents,$this->contentFile);
+	}
+}
+
+/*<html>
 	<head>
 		<title>BrandMan - DRZiegler.net</title>
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
@@ -41,4 +73,5 @@
 		</div>
 		<script src="assets/js/bootstrap.js"></script>
 	</body>
-</html>
+</html>*/
+?>
