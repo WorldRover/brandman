@@ -1,10 +1,12 @@
 <?php
 class Page {
 	
+	protected $db;
 	private $pageID;
 	private $viewID;
 
-	public function __construct($pageID,$viewID) {
+	public function __construct(PDO $db,$pageID,$viewID) {
+		$this->db = $db;
 		$this->pageID = $pageID;
 		$this->viewID = $viewID;
 	}
@@ -45,12 +47,11 @@ class Page {
 		$baseFile = str_replace("[[HTML_BODY_NAV_BRAND]]",HTML_BODY_NAV_BRAND,$baseFile);
 		
 		//! SETUP VIEW
-		$view = new View($this->viewID);
+		$view = new View($this->db,$this->viewID);
 		$viewFile = $view->buildView();
 		
-		
 		$baseFile = str_replace("[[HTML_BODY_CONTENTS]]",$viewFile,$baseFile);
-		
+
 		//! RETURN PAGE
 		return $baseFile;
 	}

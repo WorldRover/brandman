@@ -17,17 +17,17 @@ BODY {
 }
 
 #contents {
-	width: 100%;
+	padding: 0;
+	margin: 0;
 	margin-top: 51px;
 }
 
 .brand {
 	text-align: left;
-	border: 1px solid black;
 	overflow: hidden;
 	height: 40px;
 	position: relative;
-	float: right;
+	margin-top: 5px;
 }
 
 .brandbox {
@@ -57,4 +57,63 @@ BODY {
 	font-size: 48px;
 	clear: none;
 	float: right;
+}
+
+#timeline {
+	padding: 0;
+	margin: 0;
+	position: relative;
+	margin-left: 10px;
+}
+
+.company {
+	position: relative;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#timeline_ruler {
+	margin-left: 10px;
+}
+
+#timeline_ruler #timeline_ruler_years {
+	height:50px;
+}
+
+#timeline_ruler #timeline_ruler_years .yearblank {
+	float: left;
+}
+
+#timeline_ruler #timeline_ruler_years .yearmark {
+	height: 50px;
+	float: left;
+	overflow: hidden;
+}
+
+#timeline_ruler #timeline_ruler_years .yearmark .yearmark_text {
+	margin-top: 35px;
+	/* Safari */
+	-webkit-transform: rotate(-90deg);
+	
+	/* Firefox */
+	-moz-transform: rotate(-90deg);
+	
+	/* IE */
+	-ms-transform: rotate(-90deg);
+	
+	/* Opera */
+	-o-transform: rotate(-90deg);
+	
+	/* Internet Explorer */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+#timeline_ruler #timeline_ruler_marks {
+	height: 30px;
+}
+
+#timeline_ruler #timeline_ruler_marks .yearmark {
+	text-align: center;
+	float: left;
+	overflow: hidden;
 }

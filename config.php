@@ -5,4 +5,5 @@ define("DB_PASS","root");
 define("DB_DB","brandman");
 
 define("LANGUAGE","english");
+define("YEARWIDTH","10");
 ?>
