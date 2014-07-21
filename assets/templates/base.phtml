@@ -30,7 +30,149 @@
     <div class="container" id="contents">
     	[[HTML_BODY_CONTENTS]]
     </div>
-
+	<div class="modal fade" id="addCompanyBox">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">Add Company</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="alert" id="addCompanyAlert"></div>
+	        <form class="form-horizontal" role="form" id="addCompanyForm">
+			  <div class="form-group">
+			    <label for="inputCompany" class="col-sm-2 control-label">Company Name</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="inputCompany" placeholder="Company Name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="companyStartDate" class="col-sm-2 control-label">Establish Date</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="companyStartDate" placeholder="Establish Date">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="companyEndDate" class="col-sm-2 control-label">Dissolved Date</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="companyEndDate" placeholder="Dissolved Date">
+			    </div>
+			  </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+			</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="modal fade" id="addBrandBox">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">Add Brand</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="alert" id="addBrandAlert"></div>
+	        <form class="form-horizontal" role="form" id="addBrandForm">
+	          <input type="hidden" id="inputCompanyID" name="inputCompanyID" value="">
+			  <div class="form-group">
+			    <label for="inputBrand" class="col-sm-2 control-label">Brand Name</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="inputBrand" placeholder="Brand Name">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="brandStartDate" class="col-sm-2 control-label">Establish Date</label>
+			    <div class="col-sm-10">
+			      <input type="text" class="form-control" id="brandStartDate" placeholder="Establish Date">
+			    </div>
+			  </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+			</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	[[HTML_BODY_SCRIPTS]]
+	<script>
+		$(document).ready(function() {
+			$('#companyStartDate').datepicker({format: "yyyy-mm-dd"})
+			$('#companyEndDate').datepicker({format: "yyyy-mm-dd"})
+			//  $.getJSON()
+		    var jsonUrl = "assets/ajax/Add.php";
+		    $("#addCompanyForm").submit(function(){
+		        var inputCompany = $("#inputCompany").val();
+		        var companyStartDate = $("#companyStartDate").val();
+		        var companyEndDate = $("#companyEndDate").val();
+		        if (inputCompany.length == 0) {
+		            $("#inputCompany").focus();
+		        } else {
+			        if (companyStartDate.length == 0) {
+			            $("#companyStartDate").focus();
+			        } else {
+	  		            $.getJSON(
+			                jsonUrl,
+			                {addType: "company",inputCompany: inputCompany,companyStartDate: companyStartDate,companyEndDate: companyEndDate,},
+			                function(json) {
+			                	if (json.responseData.result == "success") {
+				  					console.log( json.responseData.companyID );
+				                    var result = "Company ID is \"<strong>" + json.responseData.companyID + "</strong>\"";
+				                    $('#addCompanyForm')[0].reset();
+				                    $("#addCompanyBox").modal("hide");
+									$.growl('<strong>Saved:</strong> New company has been created with the ID of ' + json.responseData.companyID, {type: 'success'});
+				                } else {
+				                	$("#addCompanyAlert").html(json.responseData.result);
+				                }
+			                }
+			            )
+			        }
+		        }
+		        return false;
+		    });
+		    $(document).on("click", ".addBrand", function () {
+				var companyID = $(this).data('companyid');
+				$("#addBrandForm #inputCompanyID").val( companyID );
+			});
+			$('#brandStartDate').datepicker({format: "yyyy-mm-dd"})
+			//  $.getJSON()
+		    var jsonUrl = "assets/ajax/Add.php";
+		    $("#addBrandForm").submit(function(){
+		        var inputBrand = $("#inputBrand").val();
+		        var brandStartDate = $("#brandStartDate").val();
+		        var inputCompanyID = $("#inputCompanyID").val();
+		        if (inputBrand.length == 0) {
+		            $("#inputBrand").focus();
+		        } else {
+			        if (brandStartDate.length == 0) {
+			            $("#brandStartDate").focus();
+			        } else {
+	  		            $.getJSON(
+			                jsonUrl,
+			                {addType: "brand",inputBrand: inputBrand,brandStartDate: brandStartDate,inputCompanyID: inputCompanyID,},
+			                function(json) {
+			                	if (json.responseData.result == "success") {
+				  					console.log( json.responseData.brandID );
+				                    var result = "Brand ID is \"<strong>" + json.responseData.brandID + "</strong>\"";
+				                    $('#addBrandForm')[0].reset();
+				                    $("#addBrandBox").modal("hide");
+									$.growl('<strong>Saved:</strong> New brand has been created with the ID of ' + json.responseData.brandID, {type: 'success'});
+				                } else {
+				                	$("#addBrandAlert").html(json.responseData.result);
+				                }
+			                }
+			            )
+			        }
+		        }
+		        return false;
+		    });
+	    });
+	</script>
   </body>
 </html>

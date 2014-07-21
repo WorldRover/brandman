@@ -50,9 +50,8 @@ class Page {
 		$view = new View($this->db,$this->viewID);
 		$viewFile = $view->buildView();
 		
-		
 		$baseFile = str_replace("[[HTML_BODY_CONTENTS]]",$viewFile,$baseFile);
-		
+
 		//! RETURN PAGE
 		return $baseFile;
 	}

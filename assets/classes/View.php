@@ -8,6 +8,9 @@ class View {
 	private $contents2;
 	private $contents3;
 	private $contents4;
+	private $contents5;
+	private $contents6;
+	private $contents7;
 	private $contentsObject;
 	
 	public function __construct($db,$viewID,$contentsObject = NULL) {
@@ -23,6 +26,9 @@ class View {
 		$this->contentFile = str_replace("[[CONTENTS2]]",$this->contents2,$this->contentFile);
 		$this->contentFile = str_replace("[[CONTENTS3]]",$this->contents3,$this->contentFile);
 		$this->contentFile = str_replace("[[CONTENTS4]]",$this->contents4,$this->contentFile);
+		$this->contentFile = str_replace("[[CONTENTS5]]",$this->contents5,$this->contentFile);
+		$this->contentFile = str_replace("[[CONTENTS6]]",$this->contents6,$this->contentFile);
+		$this->contentFile = str_replace("[[CONTENTS7]]",$this->contents7,$this->contentFile);
 		return $this->contentFile;
 	}
 }
